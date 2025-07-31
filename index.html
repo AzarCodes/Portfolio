@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Azar S | DevOps Engineer Portfolio</title>
-  <!-- EmailJS SDK (uncomment if using EmailJS) -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script> -->
   <style>
     :root {
       --bg-color: #0d1117;
@@ -17,269 +15,672 @@
       --success-color: #238636;
       --error-color: #da3633;
       --warning-color: #fb8500;
+      --hover-bg: #21262d;
+      --border-color: #30363d;
     }
     [data-theme="light"] {
       --bg-color: #ffffff;
-      --text-color: #000000;
-      --card-bg: #f4f4f4;
-      --accent: #007acc;
+      --text-color: #24292f;
+      --card-bg: #f6f8fa;
+      --accent: #0969da;
       --header-bg: #ffffff;
-      --header-text: #000000;
+      --header-text: #24292f;
       --success-color: #2da44e;
       --error-color: #cf222e;
       --warning-color: #fb8500;
+      --hover-bg: #f3f4f6;
+      --border-color: #d0d7de;
     }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--bg-color);
+      background: var(--bg-color);
       color: var(--text-color);
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(88, 166, 255, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(88, 166, 255, 0.08) 0%, transparent 50%);
+      z-index: -1;
+      animation: backgroundMove 20s ease-in-out infinite;
+    }
+
+    @keyframes backgroundMove {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(2deg); }
+    }
+
+    /* Header with animations */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background-color: var(--header-bg);
-      border-bottom: 1px solid #30363d;
+      padding: 1.5rem 2rem;
+      background: rgba(22, 27, 34, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: all 0.3s ease;
     }
+
+    .header-scroll {
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+      padding: 1rem 2rem;
+    }
+
     .name-title {
       display: flex;
       align-items: center;
       gap: 1rem;
+      animation: slideInLeft 0.8s ease-out;
     }
+
     .name-title img {
-      width: 45px;
-      height: 45px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--accent);
+      border: 3px solid var(--accent);
+      transition: all 0.3s ease;
+      cursor: pointer;
     }
+
+    .name-title img:hover {
+      transform: scale(1.1) rotate(5deg);
+      border-color: #4a90e2;
+      box-shadow: 0 0 20px rgba(88, 166, 255, 0.5);
+    }
+
     .name-text h1 {
       margin: 0;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       color: var(--header-text);
+      font-weight: 700;
+      transition: all 0.3s ease;
     }
+
+    .name-text h1:hover {
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
     .name-text p {
       margin: 0;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: #8b949e;
+      font-weight: 500;
     }
+
+    /* Enhanced Theme Switch */
     .theme-switch {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      animation: slideInRight 0.8s ease-out;
+    }
+
+    .theme-switch::before {
+      content: '🌙';
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    [data-theme="light"] .theme-switch::before {
+      content: '☀️';
+    }
+
+    .theme-switch input[type="checkbox"] {
+      display: none;
+    }
+
+    .theme-switch label {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+      background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .theme-switch label:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
+    }
+
+    .theme-switch label::before {
+      content: '';
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      left: 2px;
+      top: 2px;
+      background: white;
+      border-radius: 50%;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .theme-switch input[type="checkbox"]:checked + label {
+      background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .theme-switch input[type="checkbox"]:checked + label::before {
+      transform: translateX(30px);
+    }
+
+    /* Container with fade-in animation */
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    /* Section animations */
+    section {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: sectionFadeIn 0.8s ease-out forwards;
+    }
+
+    section:nth-child(2) { animation-delay: 0.1s; }
+    section:nth-child(3) { animation-delay: 0.2s; }
+    section:nth-child(4) { animation-delay: 0.3s; }
+    section:nth-child(5) { animation-delay: 0.4s; }
+    section:nth-child(6) { animation-delay: 0.5s; }
+
+    @keyframes sectionFadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 2px;
+      animation: lineGrow 0.8s ease-out forwards;
+    }
+
+    @keyframes lineGrow {
+      from { width: 0; }
+      to { width: 50px; }
+    }
+
+    /* Enhanced Cards */
+    .card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-color);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(88, 166, 255, 0.1), transparent);
+      transition: all 0.6s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(88, 166, 255, 0.2);
+      border-color: var(--accent);
+    }
+
+    .card:hover::before {
+      left: 100%;
+    }
+
+    .card strong {
+      color: var(--accent);
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .card ul {
+      margin: 0.8rem 0;
+      padding-left: 1.2rem;
+    }
+
+    .card li {
+      margin-bottom: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .card li:hover {
+      transform: translateX(5px);
+      color: var(--accent);
+    }
+
+    /* Dynamic Skills Section */
+    .skills-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .skills-list {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid var(--border-color);
+    }
+
+    .skills-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .skills-list li {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .skills-list li::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      transition: all 0.3s ease;
+    }
+
+    .skills-list li:hover {
+      padding-left: 2rem;
+      color: var(--accent);
+      transform: scale(1.02);
+    }
+
+    .skills-list li:hover::before {
+      transform: rotate(90deg);
+    }
+
+    .skills-list li:last-child {
+      border-bottom: none;
+    }
+
+    .skills-logos {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid var(--border-color);
+    }
+
+    .skills-logos img {
+      height: 45px;
+      width: auto;
+      filter: grayscale(0.5);
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      cursor: pointer;
+    }
+
+    .skills-logos img:hover {
+      filter: grayscale(0) brightness(1.2);
+      transform: scale(1.3) rotate(5deg);
+      z-index: 10;
+      position: relative;
+    }
+
+    /* Project Cards with enhanced animations */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-color);
+      transition: all 0.4s ease;
+      position: relative;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), #4a90e2);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(88, 166, 255, 0.15);
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-title {
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-    .theme-switch input[type="checkbox"] {
-      display: none;
-    }
-    .theme-switch label {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-      background-color: #ccc;
-      border-radius: 12px;
-      cursor: pointer;
-    }
-    .theme-switch label::before {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      left: 2px;
-      top: 2px;
-      background-color: white;
-      border-radius: 50%;
-      transition: transform 0.3s ease;
-    }
-    .theme-switch input[type="checkbox"]:checked + label {
-      background-color: var(--accent);
-    }
-    .theme-switch input[type="checkbox"]:checked + label::before {
-      transform: translateX(26px);
-    }
-    .container {
-      max-width: 960px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    h2 {
-      color: var(--accent);
-    }
-    .card {
-      background-color: var(--card-bg);
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    }
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #8b949e;
-    }
-    .skills-logos {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    .skills-logos img {
-      height: 40px;
-      width: auto;
-      filter: none;
+
+    .project-title::before {
+      content: '🚀';
+      font-size: 1rem;
     }
 
-    /* Enhanced Contact Form Styles */
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    .github-link:hover {
+      background: var(--accent);
+      color: var(--bg-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
+    }
+
+    /* Enhanced Contact Form */
     .contact-form {
-      background-color: var(--card-bg);
-      padding: 2rem;
-      margin: 2rem auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-      max-width: 600px;
+      background: var(--card-bg);
+      padding: 2.5rem;
+      margin: 3rem auto;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      max-width: 650px;
       width: 100%;
       position: relative;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
     }
+
+    .contact-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), #4a90e2, var(--accent));
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
     .contact-form h2 {
       margin-top: 0;
       margin-bottom: 2rem;
-      font-size: 1.8rem;
+      font-size: 2rem;
       text-align: center;
       color: var(--accent);
+      position: relative;
     }
+
+    .contact-form h2::before {
+      content: '📧';
+      display: block;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
     .form-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.8rem;
+      position: relative;
     }
+
     .contact-form label {
       display: block;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--text-color);
+      transition: all 0.3s ease;
     }
+
     .contact-form input,
     .contact-form textarea {
       width: 100%;
-      padding: 0.8rem 1rem;
-      border: 2px solid #30363d;
-      border-radius: 8px;
-      background-color: var(--bg-color);
+      padding: 1rem 1.2rem;
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      background: var(--bg-color);
       color: var(--text-color);
       font-size: 1rem;
       font-family: inherit;
-      box-sizing: border-box;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
     }
+
     .contact-form input:focus,
     .contact-form textarea:focus {
       outline: none;
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
-      transform: translateY(-1px);
+      box-shadow: 0 0 0 4px rgba(88, 166, 255, 0.2);
+      transform: translateY(-2px);
     }
+
     .contact-form input.error,
     .contact-form textarea.error {
       border-color: var(--error-color);
-      box-shadow: 0 0 0 3px rgba(218, 54, 51, 0.2);
+      box-shadow: 0 0 0 4px rgba(218, 54, 51, 0.2);
+      animation: shake 0.5s ease-in-out;
     }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
     .contact-form textarea {
       resize: vertical;
-      min-height: 120px;
+      min-height: 130px;
     }
+
     .contact-form button {
       background: linear-gradient(135deg, var(--accent), #4a90e2);
       color: white;
       border: none;
-      padding: 1rem 2rem;
-      border-radius: 8px;
+      padding: 1.2rem 2.5rem;
+      border-radius: 12px;
       cursor: pointer;
       font-size: 1.1rem;
       font-weight: 600;
       width: 100%;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       position: relative;
       overflow: hidden;
       margin-top: 1rem;
-      box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+      box-shadow: 0 6px 20px rgba(88, 166, 255, 0.3);
     }
+
+    .contact-form button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: all 0.6s ease;
+    }
+
     .contact-form button:hover {
-      opacity: 0.9;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(88, 166, 255, 0.4);
+    }
+
+    .contact-form button:hover::before {
+      left: 100%;
+    }
+
+    .contact-form button:active {
       transform: translateY(-1px);
     }
-    .contact-form button:active {
-      transform: translateY(0);
-    }
+
     .contact-form button:disabled {
-      opacity: 0.6;
+      opacity: 0.7;
       cursor: not-allowed;
       transform: none;
     }
+
     .contact-form button.loading {
       color: transparent;
     }
+
     .contact-form button.loading::after {
       content: '';
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 20px;
-      height: 20px;
-      border: 2px solid transparent;
-      border-top: 2px solid var(--bg-color);
+      width: 24px;
+      height: 24px;
+      border: 3px solid transparent;
+      border-top: 3px solid white;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
 
-    /* Notification Styles */
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* Enhanced Notifications */
     .notification {
       position: fixed;
       top: 20px;
       right: 20px;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
+      padding: 1.2rem 1.8rem;
+      border-radius: 12px;
       color: white;
-      font-weight: 500;
+      font-weight: 600;
       z-index: 1000;
       transform: translateX(400px);
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      max-width: 300px;
+      gap: 0.8rem;
+      max-width: 350px;
+      backdrop-filter: blur(10px);
     }
+
     .notification.show {
       transform: translateX(0);
     }
+
     .notification.success {
-      background-color: var(--success-color);
+      background: linear-gradient(135deg, var(--success-color), #2ea043);
     }
+
     .notification.error {
-      background-color: var(--error-color);
+      background: linear-gradient(135deg, var(--error-color), #d1242f);
     }
+
     .notification.warning {
-      background-color: var(--warning-color);
+      background: linear-gradient(135deg, var(--warning-color), #fd7e14);
     }
+
     .notification .close-btn {
       background: none;
       border: none;
       color: white;
       cursor: pointer;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       padding: 0;
       margin-left: auto;
+      transition: all 0.3s ease;
+    }
+
+    .notification .close-btn:hover {
+      transform: scale(1.2);
     }
 
     /* Error message styles */
@@ -290,9 +691,190 @@
       margin-bottom: 0;
       display: none;
       font-weight: 500;
+      animation: errorSlideIn 0.3s ease-out;
     }
+
     .error-message.show {
       display: block;
+    }
+
+    @keyframes errorSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer animations */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.95rem;
+      color: #8b949e;
+      background: var(--card-bg);
+      margin-top: 3rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    #rotating-skill {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    /* Keyframe animations */
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .skills-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+      }
+      
+      .name-title {
+        margin-bottom: 1rem;
+      }
+      
+      .container {
+        margin: 1rem auto;
+        padding: 0 1rem;
+      }
+      
+      .card {
+        padding: 1.2rem;
+      }
+      
+      .contact-form {
+        padding: 1.8rem;
+        margin: 2rem auto;
+      }
+      
+      .contact-form h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+      }
+      
+      .form-group {
+        margin-bottom: 1.4rem;
+      }
+      
+      .skills-logos img {
+        height: 35px;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      .notification {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+        transform: translateY(-100px);
+      }
+      
+      .notification.show {
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .contact-form {
+        max-width: 100%;
+        padding: 1.5rem;
+        margin: 1.5rem auto;
+      }
+      
+      .contact-form h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+      }
+      
+      .contact-form input,
+      .contact-form textarea {
+        font-size: 0.95rem;
+        padding: 0.8rem;
+      }
+      
+      .contact-form button {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+      }
+      
+      .form-group {
+        margin-bottom: 1.2rem;
+      }
+      
+      .name-title img {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .name-text h1 {
+        font-size: 1.4rem;
+      }
+    }
+
+    /* Scroll animations */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s ease-out;
+    }
+
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Loading overlay */
@@ -302,109 +884,23 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
+      background: rgba(22, 27, 34, 0.8);
+      border-radius: 20px;
       display: none;
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(5px);
     }
+
     .form-overlay.show {
       display: flex;
-    }
-
-    @keyframes spin {
-      0% { transform: translate(-50%, -50%) rotate(0deg); }
-      100% { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .contact-form.success {
-      animation: fadeInUp 0.3s ease;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        text-align: center;
-      }
-      .name-title {
-        margin-bottom: 1rem;
-      }
-      .container {
-        margin: 1rem auto;
-        padding: 0 0.8rem;
-      }
-      .card {
-        padding: 0.8rem;
-      }
-      .contact-form {
-        padding: 1.5rem;
-        margin: 1.5rem auto;
-      }
-      .contact-form h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-      }
-      .form-group {
-        margin-bottom: 1.2rem;
-      }
-      .skills-logos img {
-        height: 30px;
-      }
-      h2 {
-        font-size: 1.2rem;
-      }
-      .notification {
-        top: 10px;
-        right: 10px;
-        left: 10px;
-        max-width: none;
-        transform: translateY(-100px);
-      }
-      .notification.show {
-        transform: translateY(0);
-      }
-    }
-    @media (max-width: 500px) {
-      .contact-form {
-        max-width: 100%;
-        padding: 1rem;
-        margin: 1rem auto;
-      }
-      .contact-form h2 {
-        font-size: 1.4rem;
-        margin-bottom: 1.2rem;
-      }
-      .contact-form input,
-      .contact-form textarea {
-        font-size: 0.95rem;
-        padding: 0.7rem;
-      }
-      .contact-form button {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-      }
-      .form-group {
-        margin-bottom: 1rem;
-      }
     }
   </style>
 </head>
 <body>
-  <header>
+  <header id="header">
     <div class="name-title">
-      <img src="azar.JPG" alt="Azar S Photo" />
+      <img src="azar.JPG" alt="Azar S Photo" id="profileImage" />
       <div class="name-text">
         <h1>Azar S</h1>
         <p>DevOps Engineer</p>
@@ -417,37 +913,41 @@
   </header>
 
   <div class="container">
-    <section>
+    <section class="scroll-reveal">
       <h2>About Me</h2>
       <p>Experienced DevOps Engineer with 3+ years in cloud infrastructure, Python automation, CI/CD, Docker, and Kubernetes. Specialized in infrastructure-as-code, cost optimization, and secure deployments.</p>
     </section>
 
-    <section>
+    <section class="scroll-reveal">
       <h2>Skills</h2>
-      <ul>
-        <li><strong>Cloud:</strong> AWS, Azure</li>
-        <li><strong>IaC:</strong> Terraform, Pulumi, CloudFormation</li>
-        <li><strong>CI/CD:</strong> GitHub Actions, Jenkins, GitLab CI</li>
-        <li><strong>Containers:</strong> Docker, Kubernetes, Helm</li>
-        <li><strong>Python:</strong> Flask, FastAPI, Boto3</li>
-      </ul>
-      <div class="skills-logos">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aws/aws-original.svg" alt="AWS" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub Actions" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" alt="Jenkins" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg" alt="GitLab CI" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/helm/helm-original.svg" alt="Helm" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask" />
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI" />
+      <div class="skills-container">
+        <div class="skills-list">
+          <ul>
+            <li><strong>Cloud:</strong> AWS, Azure</li>
+            <li><strong>IaC:</strong> Terraform, Pulumi, CloudFormation</li>
+            <li><strong>CI/CD:</strong> GitHub Actions, Jenkins, GitLab CI</li>
+            <li><strong>Containers:</strong> Docker, Kubernetes, Helm</li>
+            <li><strong>Python:</strong> Flask, FastAPI, Boto3</li>
+          </ul>
+        </div>
+        <div class="skills-logos">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aws/aws-original.svg" alt="AWS" title="Amazon Web Services" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure" title="Microsoft Azure" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform" title="Terraform" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub Actions" title="GitHub Actions" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" alt="Jenkins" title="Jenkins" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg" alt="GitLab CI" title="GitLab CI" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" title="Docker" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="Kubernetes" title="Kubernetes" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/helm/helm-original.svg" alt="Helm" title="Helm" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Python" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask" title="Flask" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI" title="FastAPI" />
+        </div>
       </div>
     </section>
 
-    <section>
+    <section class="scroll-reveal">
       <h2>Experience</h2>
       <div class="card">
         <strong>Senior DevOps Engineer — Tech Innovations Inc. (2022–Present)</strong>
@@ -474,37 +974,63 @@
       </div>
     </section>
 
-    <section>
+    <section class="scroll-reveal">
       <h2>Key Projects</h2>
-      <div class="card">
-        <strong>Multi-Cloud Deployment Automation</strong>
-        <p>Used Python, Boto3, Azure SDK, and Terraform to deploy infra. Reduced provisioning time from 2 hours to 15 minutes.</p>
-        <p><a href="https://github.com/azarsdevops/multicloud-deployment" target="_blank">View on GitHub</a></p>
-      </div>
-      <div class="card">
-        <strong>CI/CD Pipeline Generator</strong>
-        <p>Developed a template-based system to auto-generate GitHub Actions pipelines using Python and YAML templates.</p>
-        <p><a href="https://github.com/azarsdevops/cicd-pipeline-generator" target="_blank">View on GitHub</a></p>
-      </div>
-      <div class="card">
-        <strong>Kubernetes Cost Optimization Dashboard</strong>
-        <p>Created a dashboard that visualizes Kubernetes cluster cost and utilization using Prometheus, Grafana, and custom Python scripts.</p>
-        <p><a href="https://github.com/azarsdevops/k8s-cost-optimization-dashboard" target="_blank">View on GitHub</a></p>
-      </div>
-      <div class="card">
-        <strong>Automated Backup & Restore Tool</strong>
-        <p>Python-based tool with scheduling and AWS S3 support to automate backups for EC2 volumes and RDS instances.</p>
-        <p><a href="https://github.com/azarsdevops/automated-backup-tool" target="_blank">View on GitHub</a></p>
-      </div>
-      <div class="card">
-        <strong>Serverless Batch Image Processor</strong>
-        <p>Built a Lambda-based batch image processing service with S3 trigger, resizing images using Python Pillow library.</p>
-        <p><a href="https://github.com/azarsdevops/serverless-image-processor" target="_blank">View on GitHub</a></p>
+      <div class="project-grid">
+        <div class="project-card">
+          <div class="project-content">
+            <div class="project-title">Multi-Cloud Deployment Automation</div>
+            <p>Used Python, Boto3, Azure SDK, and Terraform to deploy infra. Reduced provisioning time from 2 hours to 15 minutes.</p>
+            <a href="https://github.com/azarsdevops/multicloud-deployment" target="_blank" class="github-link">
+              <span>📂</span> View on GitHub
+            </a>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-content">
+            <div class="project-title">CI/CD Pipeline Generator</div>
+            <p>Developed a template-based system to auto-generate GitHub Actions pipelines using Python and YAML templates.</p>
+            <a href="https://github.com/azarsdevops/cicd-pipeline-generator" target="_blank" class="github-link">
+              <span>📂</span> View on GitHub
+            </a>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-content">
+            <div class="project-title">Kubernetes Cost Optimization Dashboard</div>
+            <p>Created a dashboard that visualizes Kubernetes cluster cost and utilization using Prometheus, Grafana, and custom Python scripts.</p>
+            <a href="https://github.com/azarsdevops/k8s-cost-optimization-dashboard" target="_blank" class="github-link">
+              <span>📂</span> View on GitHub
+            </a>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-content">
+            <div class="project-title">Automated Backup & Restore Tool</div>
+            <p>Python-based tool with scheduling and AWS S3 support to automate backups for EC2 volumes and RDS instances.</p>
+            <a href="https://github.com/azarsdevops/automated-backup-tool" target="_blank" class="github-link">
+              <span>📂</span> View on GitHub
+            </a>
+          </div>
+        </div>
+        
+        <div class="project-card">
+          <div class="project-content">
+            <div class="project-title">Serverless Batch Image Processor</div>
+            <p>Built a Lambda-based batch image processing service with S3 trigger, resizing images using Python Pillow library.</p>
+            <a href="https://github.com/azarsdevops/serverless-image-processor" target="_blank" class="github-link">
+              <span>📂</span> View on GitHub
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- Enhanced Contact Form -->
-    <section class="contact-form">
+    <section class="contact-form scroll-reveal">
       <h2>Contact Me</h2>
       <form id="contactForm" action="#" method="POST">
         <div class="form-group">
@@ -543,28 +1069,148 @@
   </footer>
 
   <script>
-    // Notification system
+    // Dynamic UI Enhancements
+    
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 100) {
+        header.classList.add('header-scroll');
+      } else {
+        header.classList.remove('header-scroll');
+      }
+    });
+
+    // Scroll reveal animation
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Profile image interaction
+    const profileImage = document.getElementById('profileImage');
+    profileImage.addEventListener('click', () => {
+      profileImage.style.transform = 'scale(1.2) rotate(360deg)';
+      setTimeout(() => {
+        profileImage.style.transform = '';
+      }, 600);
+    });
+
+    // Dynamic skill logo interactions
+    const skillLogos = document.querySelectorAll('.skills-logos img');
+    skillLogos.forEach((logo, index) => {
+      logo.addEventListener('mouseenter', () => {
+        skillLogos.forEach((otherLogo, otherIndex) => {
+          if (otherIndex !== index) {
+            otherLogo.style.opacity = '0.3';
+            otherLogo.style.transform = 'scale(0.9)';
+          }
+        });
+      });
+      
+      logo.addEventListener('mouseleave', () => {
+        skillLogos.forEach(otherLogo => {
+          otherLogo.style.opacity = '';
+          otherLogo.style.transform = '';
+        });
+      });
+    });
+
+    // Card hover sound effect (optional)
+    const cards = document.querySelectorAll('.card, .project-card');
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-8px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    // Dynamic typing effect for rotating skills
+    const skills = [
+      'Cloud: AWS, Azure ☁️',
+      'IaC: Terraform, Pulumi, CloudFormation 🏗️',
+      'CI/CD: GitHub Actions, Jenkins, GitLab CI 🚀',
+      'Containers: Docker, Kubernetes, Helm 📦',
+      'Python: Flask, FastAPI, Boto3 🐍'
+    ];
+    
+    let skillIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 100;
+
+    function typeSkill() {
+      const currentSkill = skills[skillIndex];
+      const rotatingSkillElement = document.getElementById('rotating-skill');
+      
+      if (isDeleting) {
+        rotatingSkillElement.textContent = currentSkill.substring(0, charIndex - 1);
+        charIndex--;
+        typeSpeed = 50;
+      } else {
+        rotatingSkillElement.textContent = currentSkill.substring(0, charIndex + 1);
+        charIndex++;
+        typeSpeed = 100;
+      }
+      
+      if (!isDeleting && charIndex === currentSkill.length) {
+        typeSpeed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        skillIndex = (skillIndex + 1) % skills.length;
+        typeSpeed = 500;
+      }
+      
+      setTimeout(typeSkill, typeSpeed);
+    }
+
+    // Start typing effect
+    setTimeout(typeSkill, 1000);
+
+    // Notification system with enhanced animations
     function showNotification(message, type = 'success', duration = 5000) {
       const notification = document.createElement('div');
       notification.className = `notification ${type}`;
+      
+      const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️';
       notification.innerHTML = `
+        <span>${icon}</span>
         <span>${message}</span>
         <button class="close-btn" onclick="this.parentElement.remove()">&times;</button>
       `;
       
       document.body.appendChild(notification);
       
-      // Show notification
-      setTimeout(() => notification.classList.add('show'), 100);
-      
-      // Auto remove
+      // Show notification with bounce effect
       setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
+        notification.classList.add('show');
+        notification.style.animation = 'bounceIn 0.6s ease-out';
+      }, 100);
+      
+      // Auto remove with fade out
+      setTimeout(() => {
+        notification.style.animation = 'fadeOut 0.4s ease-in';
+        setTimeout(() => notification.remove(), 400);
       }, duration);
     }
 
-    // Form validation
+    // Enhanced form validation with dynamic feedback
     function validateField(fieldId, value, validationType) {
       const field = document.getElementById(fieldId);
       const errorElement = document.getElementById(fieldId + 'Error');
@@ -627,24 +1273,37 @@
       return isValid;
     }
 
-    // Real-time validation
-    document.getElementById('name').addEventListener('blur', function() {
-      validateField('name', this.value, 'name');
-    });
+    // Real-time validation with debouncing
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
 
-    document.getElementById('email').addEventListener('blur', function() {
-      validateField('email', this.value, 'email');
-    });
+    // Add real-time validation
+    document.getElementById('name').addEventListener('input', debounce(function() {
+      if (this.value.length > 0) validateField('name', this.value, 'name');
+    }, 300));
 
-    document.getElementById('subject').addEventListener('blur', function() {
-      validateField('subject', this.value, 'subject');
-    });
+    document.getElementById('email').addEventListener('input', debounce(function() {
+      if (this.value.length > 0) validateField('email', this.value, 'email');
+    }, 300));
 
-    document.getElementById('message').addEventListener('blur', function() {
-      validateField('message', this.value, 'message');
-    });
+    document.getElementById('subject').addEventListener('input', debounce(function() {
+      if (this.value.length > 0) validateField('subject', this.value, 'subject');
+    }, 300));
 
-    // Form submission with multiple options
+    document.getElementById('message').addEventListener('input', debounce(function() {
+      if (this.value.length > 0) validateField('message', this.value, 'message');
+    }, 300));
+
+    // Enhanced form submission
     document.getElementById('contactForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
@@ -678,10 +1337,7 @@
       formOverlay.classList.add('show');
       
       try {
-        // OPTION 1: Email using mailto (opens user's email client)
-        // window.location.href = `mailto:your-email@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
-        
-        // OPTION 2: Using Formspree (free form backend service)
+        // Using Formspree
         const response = await fetch('https://formspree.io/f/manbbbog', {
           method: 'POST',
           headers: {
@@ -697,8 +1353,8 @@
         });
         
         if (response.ok) {
-          // Success
-          showNotification('✅ Thank you! Your message has been sent successfully.', 'success');
+          // Success with celebration animation
+          showNotification('🎉 Thank you! Your message has been sent successfully.', 'success');
           this.reset();
           
           // Clear any existing error states
@@ -706,27 +1362,13 @@
           document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
           
           // Add success animation to form
-          document.querySelector('.contact-form').classList.add('success');
+          document.querySelector('.contact-form').style.animation = 'pulse 0.6s ease-out';
           setTimeout(() => {
-            document.querySelector('.contact-form').classList.remove('success');
-          }, 300);
+            document.querySelector('.contact-form').style.animation = '';
+          }, 600);
         } else {
           throw new Error('Form submission failed');
         }
-        
-        // OPTION 3: Using EmailJS (client-side email service)
-        /*
-        emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-          from_name: name,
-          from_email: email,
-          subject: subject,
-          message: message,
-          to_email: "your-email@example.com"
-        }).then(() => {
-          showNotification('✅ Thank you! Your message has been sent successfully.', 'success');
-          this.reset();
-        });
-        */
         
       } catch (error) {
         // If Formspree fails, fallback to mailto
@@ -749,32 +1391,26 @@
       }
     });
 
-    // Rotating skills
-    const skills = [
-      'Cloud: AWS, Azure',
-      'IaC: Terraform, Pulumi, CloudFormation',
-      'CI/CD: GitHub Actions, Jenkins, GitLab CI',
-      'Containers: Docker, Kubernetes, Helm',
-      'Python: Flask, FastAPI, Boto3'
-    ];
-    let index = 0;
-    setInterval(() => {
-      document.getElementById('rotating-skill').textContent = skills[index];
-      index = (index + 1) % skills.length;
-    }, 3000);
-
-    // Theme toggle
+    // Theme toggle with smooth transition
     function toggleTheme(checked) {
+      document.body.style.transition = 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       document.body.setAttribute('data-theme', checked ? 'light' : 'dark');
+      
+      // Add ripple effect to theme switch
+      const themeSwitch = document.querySelector('.theme-switch label');
+      themeSwitch.style.animation = 'pulse 0.3s ease-out';
+      setTimeout(() => {
+        themeSwitch.style.animation = '';
+      }, 300);
     }
 
-    // Set initial theme
+    // Set initial theme with system preference
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
       document.getElementById('theme-toggle').checked = true;
       document.body.setAttribute('data-theme', 'light');
     }
 
-    // Handle input focus to clear errors
+    // Handle input focus to clear errors with smooth transition
     document.querySelectorAll('.contact-form input, .contact-form textarea').forEach(input => {
       input.addEventListener('focus', function() {
         this.classList.remove('error');
@@ -782,8 +1418,74 @@
         if (errorElement) {
           errorElement.classList.remove('show');
         }
+        
+        // Add focus glow effect
+        this.style.boxShadow = '0 0 0 4px rgba(88, 166, 255, 0.2)';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.style.boxShadow = '';
       });
     });
+
+    // Add some CSS animations via JavaScript
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes bounceIn {
+        0% { transform: translateX(300px) scale(0.8); opacity: 0; }
+        50% { transform: translateX(-10px) scale(1.05); opacity: 1; }
+        100% { transform: translateX(0) scale(1); opacity: 1; }
+      }
+      
+      @keyframes fadeOut {
+        0% { opacity: 1; transform: translateX(0); }
+        100% { opacity: 0; transform: translateX(300px); }
+      }
+      
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Add parallax effect to background
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.card, .project-card');
+      
+      parallaxElements.forEach((element, index) => {
+        const rate = scrolled * -0.5;
+        element.style.transform = `translateY(${rate * 0.1}px)`;
+      });
+    });
+
+    // Mouse follow effect for accent color
+    document.addEventListener('mousemove', (e) => {
+      const cursor = document.querySelector('.cursor-glow');
+      if (!cursor) {
+        const newCursor = document.createElement('div');
+        newCursor.className = 'cursor-glow';
+        newCursor.style.cssText = `
+          position: fixed;
+          width: 20px;
+          height: 20px;
+          background: radial-gradient(circle, rgba(88, 166, 255, 0.3), transparent);
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 9999;
+          transition: all 0.1s ease;
+        `;
+        document.body.appendChild(newCursor);
+      }
+      
+      const cursorGlow = document.querySelector('.cursor-glow');
+      cursorGlow.style.left = e.clientX - 10 + 'px';
+      cursorGlow.style.top = e.clientY - 10 + 'px';
+    });
+
+    console.log('🚀 Dynamic Portfolio Loaded Successfully!');
   </script>
 </body>
 </html>
